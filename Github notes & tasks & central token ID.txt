@@ -1,0 +1,43 @@
+GITHUB TOKEN :   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
+
+
+git clone : it is  to  create  local copy of the central repository
+
+git add . :it is another to send chenges to staging area.
+
+git commit :it is to provide the commit message to the chenges
+
+git push :to push the changes from local repository to central repository 
+
+git log  :to get the commit history we used this.
+
+git show commit_id :to check perticular commit details.
+
+git status :to check the working directory status
+
+
+tasks :[video number 46 questions explaining (video time 22 mimutes:13 seconds)]
+
+1.find out amar log commits 
+
+2.find out last two days commits
+
+3.in a perticular commit how many files i modified ?
+ 
+4.for a perticular file how many commits happen ?
+
+5.in august 2nd week how many commits happen ?
+
+6.diff b/n two commits ?
+
+7) how to clone your repository by using ssh? [ video number 47 questions explaining (video time 19:00)]
+
+8) how to clone particular branch?
+
+9) how to clone folder from repository?
+
+10) what is the max filesize i can push?
+
+11) how to push empty folder?
+
+12) how to check feature branch is merged with develop branch or not ?
