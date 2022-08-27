@@ -1,0 +1,629 @@
+#############################################
+
+why linux?
+free of cost
+command line 
+more security
+###############################
+
+unix -open source
+
+different distributions:
+amazon-Linux
+RedhatLinux
+Centos
+ubuntu
+
+
+fedora
+suse
+sun-solaris
+ibm-aix
+oracle-linux
+hp-ux
+
+#####################################
+
+
+#############################################################
+directory structure:
+
+/ - this is main folder in linux
+
+/root - root home/personal/default directory
+
+/etc - all system/application  configuration
+
+/home - all normal user directories available here
+       /home/ec2-user 
+
+/bin /sbin /usr/bin  /usr/sbin - any program/command/executables files will be there.
+
+/tmp - temparary folder where system stores the cache.
+
+/dev - all device files
+
+#########################################################
+absolutepath: full adress for directory. if you are accesing/creating file/folder
+              from different location
+              ex: i am in /etc   and want create/access file in /root
+ 
+cat /root/amar  touch /root/amar 
+
+relative path: short address for directory/file. if you are accesing/creating file/folder
+              from same location.
+              ex: i am in /root  and  want create/access file in /root       
+
+cat amar  touch amar 
+
+###########################################################################
+file management:
+
+ls -it shows all file and folder names
+
+ -l  -- long list for each file/folder such as filetype/permissions/ownerships/size/timestamp/name
+ -a  -- it shows hiden files/folders( for securrity purpous generally in home directory will maintain hidden)
+ -S  -- assending or desceding order wrt size
+ -t  -- assending or desceding order wrt time
+ -r  -- reverse order
+
+[root@ip-172-31-44-53 /]# ls -l file     
+-rw-r--r-- 1 root root 0 Mar 21 03:34 file
+
+[root@ip-172-31-44-53 /]# ls -ld dev
+drwxr-xr-x 15 root root 2900 Mar 21 03:04 dev
+[root@ip-172-31-44-53 /]#
+
+######
+cd    > to change the directory we use this.
+
+cd -  >  which takes you to previous directory  (qview in remote) 
+
+        iam in /etc    , i was in /root
+        if i do cd -   ,it will take me to /root again
+
+cd ..  > which takes you one directory outside
+
+########
+touch  file1    > creates new file , if file already exists it will just update timestamps
+
+[root@ip-172-31-44-53 /]# touch file
+[root@ip-172-31-44-53 /]# ls -l file
+-rw-r--r-- 1 root root 0 Mar 21 03:37 file
+[root@ip-172-31-44-53 /]#
+
+###
+cat - create/open/append/overwrite the file
+
+cat file  to open the  file
+
+cat > filename to create new file or to overwrite existing file
+
+cat >> filename   to create new file or to append existing file
+
+######
+
+vi - create/open/modify the file
+
+escapemode
+insertmode
+commandmode
+	
+escape mode: 
+ gg- takes you to first line
+ G -takes you to last line
+ 2gg - takes you to 2nd line
+ dd - delete 1 line
+ 2dd - delete 2 lines from cursor(not from 2nd line)
+ yy- copy one line from ur cursor
+ 2yy- copy two line from ur cursor(not from 2nd line)
+ u - undo
+ p - paste
+ 2p - 2 times will be pasted 
+ 
+insertmode: escape key to got back to escape
+
+  i - insert mode without change in cursor
+  I - insert mode with cusrsor moved to beginig of the line.
+  a - insert mode with cusrsor moved to one letter ahead
+  A - insert mode with cusrsor moved to last of the line
+  o - insert mode with new line below.
+  O - insert mode with new line above.
+
+command mode: 
+
+  :wq     write and quit
+  :w      save
+  :q      quit ( no changes has been made and just quit)
+  :q!     force quit  (if you do changes and try to quit forcly without save)
+
+
+tasks:
+how to search a keyword in vi? how to make case insensitive search?
+how to replace a keyword in vi?
+
+
+
+
+##################
+
+cp - to copy/backup the files 
+
+ cp file /tmp   >> for file
+ cp -r folder /tmp    >> for directory
+ cp file file1   >> renameing file
+
+mv -  to move the files/folders
+
+  mv file /tmp   >> for file
+  mv folder /tmp    >> for directory
+  mv file /tmp/file1  >> renameing file
+
+#######################################################
+
+user management: ec2-user >>root
+
+useradd -- to create the users
+
+useradd amar   >> it will create uid/gid/homedirectory and assign a shell
+
+username
+userid
+groupname
+groupid
+homedirectory
+
+
+
+useradd -u 1005 amar   to  use your own id 
+useradd -g 1005 amar   to  use your group id 
+useradd -G pradeep amar  >>  to  use secondary group
+useradd -d /amar amar   >> to use your own home directory
+useradd -s /bin/ksh amar  >> to use your own shell
+useradd -l amar >> to lock user
+####
+
+passwd - to chnage the passwd
+
+passwd amar  >> to change amar password
+passwd -l amar >> to lock password
+
+
+how to provide sudo access.
+
+/etc/sudoers
+
+amar ALL=(ALL) NOPASSWD: ALL
+
+
+how to allow other users into system.
+
+/etc/ssh/sshd_config
+passwordauthentication no >> make it yes
+
+systemctl restart sshd
+
+
+tasks:
+1) how to create a user with our own userid/groupname/homedirectory?
+2) how to change userid/groupname/homedirectory for existing user?
+
+
+ #####
+permissions and ownerships:
+
+-rw-r--r-- 1 root root 268 Mar 21 03:51 file
+
+r-4
+w-2
+x-1
+
+owner - rw  6
+group - r   4 
+other - r   4
+
+
+
+drwx------ 3 root root  17 Mar 21 03:04 systemd
+
+owner: rwx
+group and others- NA
+
+chmod: to change the permissions
+
+chmod 666 filename/foldername
+chmod -R 777 foldername
+
+
+chown: to change ownerships
+ 
+chown new_username filename/foldername
+chown -R new_username filename/foldername
+
+
+dev:  groupadd dev  then "usermod -g dev amar"
+amar dev
+pradeep dev
+
+app:  groupadd app then "usermod -g app raju"
+raju app
+pramod app
+
+
+
+
+########################
+process management:(task management in windows)
+if your system performing slow/struck then we need management.
+
+process is a task/command which you run. whenever you run any command your kernel will create a process for that and allocate ram/cpu/storage for it based on prcoess id.
+
+ps -ef:
+
+to check what process(application) running or whcih application consuming how much ram/cpu we need this.
+
+top:
+it shows whcih application consuming how much ram/cpu we need this.
+
+once you run top command if you press "shift + p " - it will show cpu consumption order
+                         if you press "shift + m " - it will show memory consumption order
+
+                          1                        - to check how many cpus available in linux box
+
+kill: (in windows we have end now button)
+
+kill -9 process_id  
+   to kill process 
+
+
+swap: virtual ram which can be created in harddisk, whenever ram is full swap can we utilized as ram.
+
+##########################
+
+
+
+package management: to install/remove/verify applications/packages we use this.
+
+windows:
+
+browser >> find out skype.exe
+
+
+
+Linux:
+redhat/centos/amazonlinux/fedora/oracle
+
+skype.rpm
+
+ubuntu/debian:
+skype.pkg 
+
+
+yum (yellow dog updated manager) and rpm(redhat package manager) :
+
+yum is advanced and it downloads all dependencies on its own. it works based on repository             configuration.
+
+/etc/yum.repos.d/
+.repo files will be available 
+
+yum repolist  >> it will show you how many repositories added.
+
+yum install packagename             >> to install 
+            packagename-version
+
+yum remove packagename             >> to remove
+
+yum list installed                 >> to check all installed.
+
+
+##################################
+service management:
+
+background program for managing the applications.
+/usr/lib/systemd/system/httpd.service
+
+systemctl status httpd >> to check the status
+
+
+systemctl start httpd   >> to start the service
+
+systemctl enable httpd   >> to start your application at boot time.
+
+
+#####################system performance
+
+free -m  >> ram information
+swap   >> additional ram(virtual ram) which can be created in hard disk.
+
+top >> memory utilization  as well as cpu utilization it will show you.
+
+###########################adding storage
+
+region: geographycal location in aws
+availibility zone: with in the region datacenters (for hardware/network) redunduncy 
+
+first find out the availibility zone. ap-south-1a
+
+aws: ebs/efs/s3 
+
+ebs: elastic block storage.
+
+goto volume dashboard >> create volume >> provide volume type/size/availibility zone/tag name   and save it.
+
+goto volume dashboard >> select the new volume >> actions >> atatch volumes >> select your ec2 instance >> atatch
+
+login to server >> lsblk to check disk availibility
+
+format it >> mkfs.ext4 /dev/xvdf
+
+and make sure you have one empty directory to map with the hard disk. (ex: /app)
+
+mount /dev/xvdf /app
+
+verify >> lsblk  or df -h 
+
+
+
+###################################################
+
+
+shell script:
+
+for any bulk tasks or repeated tasks to be run on systems. add all commands in one file and execute it in one shot.
+
+
+find: it is for searching files/folders based on location/format/time/size/permissions/ownerships
+
+find / -name os-release
+
+find / -name *.txt
+
+find / -atime -30
+       -mtime
+       -ctime
+
+find / -size 10M -user ec2-user
+
+find / -perm 777
+
+find / -user ec2-user -exec chown root {} \;
+
+                      -exec rm -rf {} \;
+           
+                       -exec chmod 644 {} \;
+
+
+
+##############################################################
+grep: to search keywords from file/command outputs
+
+
+grep amar sample   > search amar keyword
+
+grep -i amar sample          >> same as above but without case incensitive 
+ 
+grep -i -w amar sample      >> search amar keyword not amarender
+
+grep -i -w ^amar sample    >> lines start with keyword
+
+grep -i -c amar sample     >> number of lines keyword matches
+ 
+grep -v -i amar sample     >> non matching lines
+
+
+
+###############################################
+
+
+sed: search and replace
+
+sed -i "s/amar/pradeep/" sample           >> search amar keyword and replace with pradeep and update in same file.
+
+sed  "s/amar/pradeep/" sample            >> search amar keyword and replace with pradeep and wont update file.
+
+
+sed  "s/amar/pradeep/gi" sample         >> by default sed will read everyline only once and replace one occurence only but g will make it all occurences.
+                                           i will remove the case incensitive.
+
+
+sed '/^$/d' sample                    >> to remove empty lines.
+
+
+####################################
+
+
+wc : word count 
+
+[root@ip-172-31-12-167 ~]# rpm -qa|wc
+    460     460   16441
+[root@ip-172-31-12-167 ~]# rpm -qa|wc -l
+460
+[root@ip-172-31-12-167 ~]# rpm -qa|wc -w
+460
+[root@ip-172-31-12-167 ~]# rpm -qa|wc -c
+16441
+[root@ip-172-31-12-167 ~]#
+
+
+
+########################################
+
+head: we can see top most n number of lines.
+
+
+
+ps -ef|head -n 20  >> it will show first 20 lines
+ps -ef|head -n +5   >> it will ignore last 4 lines and print remaining all.
+
+################
+tail: we can see last n number of lines from outputs.
+
+ps -ef|tail -n 10   >> it will show last 10 lines
+
+ps -ef|tail -n +5    >> it will ignore first 4 lines and show from 5th line.
+
+
+#######################
+
+echo : to prin the messages.
+
+echo hi
+
+echo "hello , amar"
+
+
+###################################
+
+xargs: combine multiple lines into single line.
+
+[root@ip-172-31-12-167 ~]# ifconfig eth0|head -n2
+eth0: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 9001
+        inet 172.31.12.167  netmask 255.255.240.0  broadcast 172.31.15.255
+
+
+
+[root@ip-172-31-12-167 ~]# ifconfig eth0|head -n2|xargs
+eth0: flags=4163<UP,BROADCAST,RUNNING,MULTICAST> mtu 9001 inet 172.31.12.167 netmask 255.255.240.0 broadcast 172.31.15.255
+[root@ip-172-31-12-167 ~]#
+
+
+######################
+
+tr: translate small to caps and viceversa.
+
+cat sample |tr [a-z] [A-z]
+
+#########################
+awk: it is used to extract keys or columns or fields from the given output.
+
+[root@ip-172-31-37-43 ~]# uname -a|awk -F " " '{print $3}'
+5.10.102-99.473.amzn2.x86_64
+[root@ip-172-31-37-43 ~]#
+
+[root@ip-172-31-37-43 ~]# cat /etc/os-release |grep ^NAME|awk -F '"' '{print $2}'|awk '{print $1}'
+Amazon
+[root@ip-172-31-37-43 ~]#
+
+[root@ip-172-31-37-43 ~]# free -m|grep Mem|awk '{print $7}'
+725
+[root@ip-172-31-37-43 ~]#
+
+[root@ip-172-31-37-43 ~]# df -m /|grep -v Filesystem|awk '{print $4}'
+6629
+[root@ip-172-31-37-43 ~]#
+
+##################################################################
+
+
+
+how to run shell script:
+make sure shell script has exicute permission.
+
+[root@ip-172-31-47-163 ~]# chmod +x sample.sh
+[root@ip-172-31-47-163 ~]# ls -l
+total 4
+-rwxr-xr-x 1 root root 25 Mar 10 03:18 sample.sh
+
+
+if you are in same folder:
+
+[root@ip-172-31-47-163 ~]# ./sample.sh
+3
+[root@ip-172-31-47-163 ~]# sh sample.sh
+3
+
+if you are in different folder:
+
+[root@ip-172-31-47-163 ~]# cd /tmp
+[root@ip-172-31-47-163 tmp]# /root/sample.sh
+3
+[root@ip-172-31-47-163 tmp]#
+
+
+
+varibale:
+
+if a key has multiple values then that is called as variable.
+
+we have many ways to provide the variables.
+###############################################################
+1) run time varibale.
+
+#!/bin/bash
+echo "please provide value for a"
+read a
+echo "please provide value for b"
+read b
+expr $a + $b
+
+
+2) positional parameter.
+
+[root@ip-172-31-47-163 ~]# cat sample.sh
+#!/bin/bash
+
+
+a=$1
+b=$2
+
+expr $a + $b
+
+expr $a \* $b
+
+expr $a - $b
+
+expr $a / $b
+[root@ip-172-31-47-163 ~]# sh -x sample.sh amar 20
+
+
+3. local variable.
+
+#!/bin/bash
+
+trainer=amar
+echo "my trainer name is $trainer"
+echo "my trainer $trainer is belongs to hyderabad"
+echo "$trainer has 12 years experience"
+
+
+4) command output variables.
+[root@ip-172-31-47-163 ~]# cat mem.sh
+#!/bin/bash
+
+memory=`free -m|grep Mem|awk -F ' ' '{print $7}'`
+
+echo "my available memory is $memory"
+[root@ip-172-31-47-163 ~]#
+
+
+5) environment variables
+
+a) user level: particular user variables
+
+/home/amar  
+
+.bash_profile
+a=10
+export a
+
+b) global level: entrire system (any user can use them) 
+
+/etc/profile
+a=10
+export a
+
+                    
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
